@@ -10,11 +10,13 @@
     "type": "git",
     "url": "git+https://github.com/nightrunner4/sql-storage.git"
   },
-  "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/nightrunner4/sql-storage/issues"
   },
-  "homepage": "https://github.com/nightrunner4/sql-storage#readme"
+  "homepage": "https://github.com/nightrunner4/sql-storage#readme",
+  "dependencies": {
+    "sqlite3": "^5.1.6"
+  }
 }
