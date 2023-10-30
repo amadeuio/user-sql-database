@@ -1,29 +1,46 @@
-const sqlite3 = require("sqlite3").verbose(); // Import SQLite in Node.js enviroment
-const db = new sqlite3.Database("database.db"); // Create new database
+const sqlite3 = require("sqlite3").verbose();
 
-// Create table named my_table with columns 'id', 'name', and 'email'
-db.serialize(() => {
-  db.run("CREATE TABLE IF NOT EXISTS my_table (id INTEGER PRIMARY KEY, name TEXT, email TEXT)");
-});
-
-// Insert data
-db.serialize(() => {
-  const stmt = db.prepare("INSERT INTO my_table (name, email) VALUES (?, ?)"); // Data entry 'recipe'
-  stmt.run("John", "john@example.com"); // Specific data entry
-  stmt.finalize();
-});
-
-// Query data
-db.all("SELECT * FROM my_table", (err, rows) => {
-  if (err) {
-    throw err;
+class MyDatabase {
+  constructor(databaseName) {
+    this.db = new sqlite3.Database(databaseName);
+    this.db.serialize(() => {
+      this.db.run(
+        "CREATE TABLE IF NOT EXISTS my_table (id INTEGER PRIMARY KEY, name TEXT, email TEXT)"
+      );
+    });
   }
 
-  // rows is a list of objects representing each data row
-  rows.forEach((row) => {
+  insertData(name, email) {
+    const stmt = this.db.prepare("INSERT INTO my_table (name, email) VALUES (?, ?)");
+    stmt.run(name, email);
+    stmt.finalize();
+  }
+
+  queryData(callback) {
+    this.db.all("SELECT * FROM my_table", (err, rows) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, rows);
+      }
+    });
+  }
+}
+
+module.exports = MyDatabase;
+
+// Usage
+
+const myDB = new MyDatabase("database.db");
+
+myDB.insertData("John Doe", "john@example.com");
+
+myDB.queryData((err, data) => {
+  if (err) {
+    console.error("Error querying data:", err);
+  }
+
+  data.forEach((row) => {
     console.log(row);
   });
 });
-
-// Close the database connection
-db.close();
