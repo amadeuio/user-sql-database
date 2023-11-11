@@ -12,18 +12,34 @@ class MyDatabase {
   }
 
   insertData(sql, params) {
-    const stmt = this.db.prepare(sql);
-    stmt.run(params);
-    stmt.finalize();
+    this.db.serialize(() => {
+      const stmt = this.db.prepare(sql);
+      stmt.run(params);
+      stmt.finalize();
+    });
   }
 
   selectData(sql, params, callback) {
-    this.db.all(sql, params, (err, rows) => {
-      if (err) {
-        console.error(`Error selecting data: ${err.message}`);
-      } else {
-        callback(rows);
-      }
+    this.db.serialize(() => {
+      this.db.all(sql, params, (err, rows) => {
+        if (err) {
+          console.error(`Error selecting data: ${err.message}`);
+        } else {
+          callback(rows);
+        }
+      });
+    });
+  }
+
+  updateData(sql, params) {
+    this.db.serialize(() => {
+      this.db.run(sql, params, function (err) {
+        if (err) {
+          console.error(`Error updating data: ${err.message}`);
+        } else {
+          console.log(`Row(s) updated: ${this.changes}`);
+        }
+      });
     });
   }
 }
@@ -43,6 +59,7 @@ const createTableSQL = `
 
 const insertDataSQL = "INSERT INTO users (username, email) VALUES (?, ?)";
 const selectDataSQL = "SELECT * FROM users";
+const updateDataSQL = "UPDATE users SET email = ? WHERE username = ?";
 
 // Create a table
 userDatabase.createTable(createTableSQL);
@@ -52,6 +69,16 @@ userDatabase.insertData(insertDataSQL, ["john_doe", "john@example.com"]);
 userDatabase.insertData(insertDataSQL, ["jane_smith", "jane@example.com"]);
 
 // Select and display data
+userDatabase.selectData(selectDataSQL, [], (rows) => {
+  rows.forEach((row) => {
+    console.log(row);
+  });
+});
+
+// Update data
+userDatabase.updateData(updateDataSQL, ["updated_email@example.com", "john_doe"]);
+
+// Select and display updated data
 userDatabase.selectData(selectDataSQL, [], (rows) => {
   rows.forEach((row) => {
     console.log(row);
