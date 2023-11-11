@@ -30,23 +30,23 @@ class MyDatabase {
 
 // Example Usage
 
-const myDB = new MyDatabase("database.db");
+const userDatabase = new MyDatabase("userDatabase.db");
 
 // Create table
-const tableSQL = `CREATE TABLE IF NOT EXISTS my_table (
+const tableSQL = `CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY, 
-    name TEXT, 
-    email TEXT
+    name TEXT NOT NULL, 
+    email TEXT NOT NULL
     )`;
-myDB.createTable(tableSQL);
+userDatabase.createTable(tableSQL);
 
 // Insert Data
-const insertDataSQL = "INSERT INTO my_table (name, email) VALUES (?, ?)";
+const insertDataSQL = "INSERT INTO users (name, email) VALUES (?, ?)";
 const userData = ["john_doe", "john@example.com"];
-myDB.insertData(insertDataSQL, userData);
+userDatabase.insertData(insertDataSQL, userData);
 
 // Select data
-const selectDataSQL = "SELECT * FROM my_table";
-myDB.selectData(selectDataSQL, [], (rows) => {
+const selectDataSQL = "SELECT * FROM users";
+userDatabase.selectData(selectDataSQL, [], (rows) => {
   rows.forEach((row) => console.log(row));
 });
