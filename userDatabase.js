@@ -32,21 +32,28 @@ class MyDatabase {
 
 const userDatabase = new MyDatabase("userDatabase.db");
 
-// Create table
-const tableSQL = `CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY, 
-    name TEXT NOT NULL, 
-    email TEXT NOT NULL
-    )`;
-userDatabase.createTable(tableSQL);
+// SQL Statements
+const createTableSQL = `
+  CREATE TABLE IF NOT EXISTS users (
+    id INTEGER PRIMARY KEY,
+    username TEXT,
+    email TEXT
+  )
+`;
 
-// Insert Data
-const insertDataSQL = "INSERT INTO users (name, email) VALUES (?, ?)";
-const userData = ["john_doe", "john@example.com"];
-userDatabase.insertData(insertDataSQL, userData);
-
-// Select data
+const insertDataSQL = "INSERT INTO users (username, email) VALUES (?, ?)";
 const selectDataSQL = "SELECT * FROM users";
+
+// Create a table
+userDatabase.createTable(createTableSQL);
+
+// Insert data
+userDatabase.insertData(insertDataSQL, ["john_doe", "john@example.com"]);
+userDatabase.insertData(insertDataSQL, ["jane_smith", "jane@example.com"]);
+
+// Select and display data
 userDatabase.selectData(selectDataSQL, [], (rows) => {
-  rows.forEach((row) => console.log(row));
+  rows.forEach((row) => {
+    console.log(row);
+  });
 });
