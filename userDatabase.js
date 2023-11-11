@@ -42,6 +42,16 @@ class MyDatabase {
       });
     });
   }
+
+  deleteData(sql, params) {
+    this.db.run(sql, params, function (err) {
+      if (err) {
+        console.error(`Error deleting data: ${err.message}`);
+      } else {
+        console.log(`Row(s) deleted: ${this.changes}`);
+      }
+    });
+  }
 }
 
 // Example Usage
@@ -60,6 +70,7 @@ const createTableSQL = `
 const insertDataSQL = "INSERT INTO users (username, email) VALUES (?, ?)";
 const selectDataSQL = "SELECT * FROM users";
 const updateDataSQL = "UPDATE users SET email = ? WHERE username = ?";
+const deleteDataSQL = "DELETE FROM users WHERE username = ?";
 
 // Create a table
 userDatabase.createTable(createTableSQL);
@@ -79,6 +90,16 @@ userDatabase.selectData(selectDataSQL, [], (rows) => {
 userDatabase.updateData(updateDataSQL, ["updated_email@example.com", "john_doe"]);
 
 // Select and display updated data
+userDatabase.selectData(selectDataSQL, [], (rows) => {
+  rows.forEach((row) => {
+    console.log(row);
+  });
+});
+
+// Delete data
+userDatabase.deleteData(deleteDataSQL, ["john_doe"]);
+
+// Select and display remaining data
 userDatabase.selectData(selectDataSQL, [], (rows) => {
   rows.forEach((row) => {
     console.log(row);
