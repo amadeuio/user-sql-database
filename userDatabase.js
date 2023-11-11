@@ -60,26 +60,26 @@ class MyDatabase {
 
 const userDatabase = new MyDatabase("userDatabase.db");
 
-// SQL Statements
+// SQL Statements for usernames and passwords
 const createTableSQL = `
   CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY,
     username TEXT,
-    email TEXT
+    password TEXT
   )
 `;
 
-const insertDataSQL = "INSERT INTO users (username, email) VALUES (?, ?)";
+const insertDataSQL = "INSERT INTO users (username, password) VALUES (?, ?)";
 const selectDataSQL = "SELECT * FROM users";
-const updateDataSQL = "UPDATE users SET email = ? WHERE username = ?";
+const updateDataSQL = "UPDATE users SET password = ? WHERE username = ?";
 const deleteDataSQL = "DELETE FROM users WHERE username = ?";
 
 // Create a table
 userDatabase.createTable(createTableSQL);
 
-// Insert data
-userDatabase.insertData(insertDataSQL, ["john_doe", "john@example.com"]);
-userDatabase.insertData(insertDataSQL, ["jane_smith", "jane@example.com"]);
+// Insert data (username and password)
+userDatabase.insertData(insertDataSQL, ["username1", "password1"]);
+userDatabase.insertData(insertDataSQL, ["username2", "password2"]);
 
 // Select and display data
 userDatabase.selectData(selectDataSQL, [], (rows) => {
@@ -88,8 +88,8 @@ userDatabase.selectData(selectDataSQL, [], (rows) => {
   });
 });
 
-// Update data
-userDatabase.updateData(updateDataSQL, ["updated_email@example.com", "john_doe"]);
+// Update password for a user
+userDatabase.updateData(updateDataSQL, ["updatedpass", "username1"]);
 
 // Select and display updated data
 userDatabase.selectData(selectDataSQL, [], (rows) => {
@@ -98,8 +98,8 @@ userDatabase.selectData(selectDataSQL, [], (rows) => {
   });
 });
 
-// Delete data
-userDatabase.deleteData(deleteDataSQL, ["john_doe"]);
+// Delete data (user)
+userDatabase.deleteData(deleteDataSQL, ["username1"]);
 
 // Select and display remaining data
 userDatabase.selectData(selectDataSQL, [], (rows) => {
