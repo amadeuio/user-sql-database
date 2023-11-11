@@ -44,12 +44,14 @@ class MyDatabase {
   }
 
   deleteData(sql, params) {
-    this.db.run(sql, params, function (err) {
-      if (err) {
-        console.error(`Error deleting data: ${err.message}`);
-      } else {
-        console.log(`Row(s) deleted: ${this.changes}`);
-      }
+    this.db.serialize(() => {
+      this.db.run(sql, params, function (err) {
+        if (err) {
+          console.error(`Error deleting data: ${err.message}`);
+        } else {
+          console.log(`Row(s) deleted: ${this.changes}`);
+        }
+      });
     });
   }
 }
