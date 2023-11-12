@@ -33,6 +33,25 @@ class MyDatabase {
       this.db.run(insertDataSQL, params);
     });
   }
+
+  retreiveDatabase(callback) {
+    const retreiveDatabaseSQL = `SELECT * FROM ${this.tableName}`;
+
+    this.db.serialize(() => {
+      this.db.all(retreiveDatabaseSQL, callback);
+    });
+  }
+}
+
+// Print callback
+function print(err, rows) {
+  if (err) {
+    console.error("Error:", err);
+  } else {
+    rows.forEach((row) => {
+      console.log(row);
+    });
+  }
 }
 
 // Example Usage
@@ -48,3 +67,6 @@ userDatabase.createTable("users");
 
 // Insert a user
 userDatabase.insertData("username", "password");
+
+// Print
+userDatabase.retreiveDatabase(print);
