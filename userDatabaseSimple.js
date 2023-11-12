@@ -97,6 +97,17 @@ class MyDatabase {
     }
   }
 
+  async changePassword(username, newPassword) {
+    const changePasswordSQL = `UPDATE ${this.tableName} SET password = ? WHERE username = ?`;
+    const params = [newPassword, username];
+
+    try {
+      await this.runQuery(changePasswordSQL, params);
+    } catch (err) {
+      console.error("Error changing password:", err);
+    }
+  }
+
   // Queries
 
   async runQuery(sql, params = []) {
@@ -147,6 +158,9 @@ function print(rows) {
 
   // Change username
   await userDatabase.changeUsername("username1", "newUsername");
+
+  // Change password
+  await userDatabase.changePassword("username2", "newPassword");
 
   // Print all users
   await userDatabase.retrieveUsers(print);
