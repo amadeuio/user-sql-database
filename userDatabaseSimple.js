@@ -118,6 +118,23 @@ class MyDatabase {
     }
   }
 
+  async closeDatabase() {
+    if (this.db) {
+      return new Promise((resolve, reject) => {
+        this.db.close((err) => {
+          if (err) {
+            reject(err);
+          } else {
+            console.log("Database closed successfully.");
+            resolve();
+          }
+        });
+      });
+    } else {
+      console.log("No database connection to close.");
+    }
+  }
+
   // Queries
 
   async runQuery(sql, params = []) {
@@ -166,7 +183,10 @@ function print(rows) {
   await userDatabase.addUser("username1", "password1");
   await userDatabase.addUser("username2", "password2");
 
+  // Remove user
   //await userDatabase.removeUser("username2");
+
+  // Retreive user
   //console.log(await userDatabase.retrieveUser("username1"));
 
   // Change username
@@ -177,4 +197,7 @@ function print(rows) {
 
   // Print all users
   await userDatabase.retrieveUsers(print);
+
+  // Close database
+  await userDatabase.closeDatabase();
 })();
