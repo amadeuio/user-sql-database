@@ -46,6 +46,17 @@ class MyDatabase {
     }
   }
 
+  async removeUser(username) {
+    const removeUserSQL = `DELETE FROM ${this.tableName} WHERE username = ?`;
+    const params = [username];
+
+    try {
+      await this.runQuery(removeUserSQL, params);
+    } catch (err) {
+      console.error("Error deleting user:", err);
+    }
+  }
+
   async retrieveUsers(callback) {
     const retrieveUsersSQL = `SELECT * FROM ${this.tableName}`;
 
@@ -96,6 +107,8 @@ function print(rows) {
   const userDatabase = new MyDatabase();
   await userDatabase.createDatabase("userDatabase.db");
   await userDatabase.createTable("users");
-  await userDatabase.addUser("username", "password");
+  await userDatabase.addUser("username1", "password1");
+  await userDatabase.addUser("username2", "password2");
+  await userDatabase.removeUser("username1");
   await userDatabase.retrieveUsers(print);
 })();
