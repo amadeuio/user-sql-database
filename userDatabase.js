@@ -54,6 +54,10 @@ class MyDatabase {
       });
     });
   }
+
+  // Clear database method...
+
+  // Close database method...
 }
 
 // Example Usage
@@ -82,7 +86,7 @@ userDatabase.insertData(insertDataSQL, ["username1", "password1"]);
 userDatabase.insertData(insertDataSQL, ["username2", "password2"]);
 
 // Select and display data
-userDatabase.selectData(selectDataSQL, [], (rows) => {
+userDatabase.selectData(selectDataSQL, ["username1", "password1"], (rows) => {
   rows.forEach((row) => {
     console.log(row);
   });
