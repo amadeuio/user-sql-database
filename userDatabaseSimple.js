@@ -108,6 +108,16 @@ class MyDatabase {
     }
   }
 
+  async clearDatabase() {
+    const clearDatabaseSQL = `DELETE FROM ${this.tableName}`;
+
+    try {
+      await this.runQuery(clearDatabaseSQL);
+    } catch (err) {
+      console.error("Error clearing database:", err);
+    }
+  }
+
   // Queries
 
   async runQuery(sql, params = []) {
@@ -148,6 +158,9 @@ function print(rows) {
   const userDatabase = new MyDatabase();
   await userDatabase.createDatabase("userDatabase.db");
   await userDatabase.createTable("users");
+
+  // Clear existing database
+  await userDatabase.clearDatabase();
 
   // Add users
   await userDatabase.addUser("username1", "password1");
