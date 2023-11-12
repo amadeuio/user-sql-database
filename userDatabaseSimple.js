@@ -6,67 +6,96 @@ class MyDatabase {
     this.tableName = "";
   }
 
-  setDatabaseName(databaseName) {
-    this.db = new sqlite3.Database(databaseName);
+  async createDatabase(databaseName) {
+    return new Promise((resolve, reject) => {
+      this.db = new sqlite3.Database(databaseName, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve();
+        }
+      });
+    });
   }
 
-  createTable(tableName) {
+  async createTable(tableName) {
     this.tableName = tableName;
 
     const createTableSQL = `
       CREATE TABLE IF NOT EXISTS ${this.tableName} (
-      id INTEGER PRIMARY KEY,
-      username TEXT,
-      password TEXT
+        id INTEGER PRIMARY KEY,
+        username TEXT,
+        password TEXT
       )`;
 
-    this.db.serialize(() => {
-      this.db.run(createTableSQL);
-    });
+    try {
+      await this.runQuery(createTableSQL);
+    } catch (err) {
+      console.error("Error creating table:", err);
+    }
   }
 
-  addUser(username, password) {
+  async addUser(username, password) {
     const addUserSQL = `INSERT INTO ${this.tableName} (username, password) VALUES (?, ?)`;
     const params = [username, password];
 
-    this.db.serialize(() => {
-      this.db.run(addUserSQL, params);
+    try {
+      await this.runQuery(addUserSQL, params);
+    } catch (err) {
+      console.error("Error adding user:", err);
+    }
+  }
+
+  async retrieveUsers(callback) {
+    const retrieveUsersSQL = `SELECT * FROM ${this.tableName}`;
+
+    try {
+      const rows = await this.allQuery(retrieveUsersSQL);
+      callback(rows);
+    } catch (err) {
+      console.error("Error retrieving users:", err);
+    }
+  }
+
+  // Queries
+
+  async runQuery(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.run(sql, params, function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(this);
+        }
+      });
     });
   }
 
-  retreiveUsers(callback) {
-    const retreiveUsersSQL = `SELECT * FROM ${this.tableName}`;
-
-    this.db.serialize(() => {
-      this.db.all(retreiveUsersSQL, callback);
+  async allQuery(sql, params = []) {
+    return new Promise((resolve, reject) => {
+      this.db.all(sql, params, (err, rows) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(rows);
+        }
+      });
     });
   }
 }
 
 // Print callback
-function print(err, rows) {
-  if (err) {
-    console.error("Error:", err);
-  } else {
-    rows.forEach((row) => {
-      console.log(row);
-    });
-  }
+function print(rows) {
+  rows.forEach((row) => {
+    console.log(row);
+  });
 }
 
 // Example Usage
-
-// Create database
-const userDatabase = new MyDatabase();
-
-// Set database name
-userDatabase.setDatabaseName("userDatabase.db");
-
-// Create table
-userDatabase.createTable("users");
-
-// Insert a user
-userDatabase.addUser("username", "password");
-
-// Print
-userDatabase.retreiveUsers(print);
+(async () => {
+  const userDatabase = new MyDatabase();
+  await userDatabase.createDatabase("userDatabase.db");
+  await userDatabase.createTable("users");
+  await userDatabase.addUser("username", "password");
+  await userDatabase.retrieveUsers(print);
+})();
