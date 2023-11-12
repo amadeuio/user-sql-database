@@ -57,6 +57,24 @@ class MyDatabase {
     }
   }
 
+  async retrieveUser(username) {
+    const retrieveUserSQL = `SELECT * FROM ${this.tableName} WHERE username = ?`;
+    const params = [username];
+
+    try {
+      const user = await this.allQuery(retrieveUserSQL, params);
+      if (user && user.length > 0) {
+        return user[0];
+      } else {
+        console.log("User not found.");
+        return null;
+      }
+    } catch (err) {
+      console.error("Error retrieving user:", err);
+      return null;
+    }
+  }
+
   async retrieveUsers(callback) {
     const retrieveUsersSQL = `SELECT * FROM ${this.tableName}`;
 
@@ -65,6 +83,17 @@ class MyDatabase {
       callback(rows);
     } catch (err) {
       console.error("Error retrieving users:", err);
+    }
+  }
+
+  async changeUsername(username, newUsername) {
+    const changeUsernameSQL = `UPDATE ${this.tableName} SET username = ? WHERE username = ?`;
+    const params = [newUsername, username];
+
+    try {
+      await this.runQuery(changeUsernameSQL, params);
+    } catch (err) {
+      console.error("Error changing username:", err);
     }
   }
 
@@ -104,11 +133,21 @@ function print(rows) {
 
 // Example Usage
 (async () => {
+  // Create database
   const userDatabase = new MyDatabase();
   await userDatabase.createDatabase("userDatabase.db");
   await userDatabase.createTable("users");
+
+  // Add users
   await userDatabase.addUser("username1", "password1");
   await userDatabase.addUser("username2", "password2");
-  await userDatabase.removeUser("username1");
+
+  //await userDatabase.removeUser("username2");
+  //console.log(await userDatabase.retrieveUser("username1"));
+
+  // Change username
+  await userDatabase.changeUsername("username1", "newUsername");
+
+  // Print all users
   await userDatabase.retrieveUsers(print);
 })();
