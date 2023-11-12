@@ -6,6 +6,7 @@ class MyDatabase {
     this.tableName = "";
   }
 
+  // Create a new SQLite database with a name
   async createDatabase(databaseName) {
     return new Promise((resolve, reject) => {
       this.db = new sqlite3.Database(databaseName, (err) => {
@@ -18,6 +19,7 @@ class MyDatabase {
     });
   }
 
+  // Create a table in the database with a name
   async createTable(tableName) {
     this.tableName = tableName;
 
@@ -35,6 +37,7 @@ class MyDatabase {
     }
   }
 
+  // Add a user to the table
   async addUser(username, password) {
     const addUserSQL = `INSERT INTO ${this.tableName} (username, password) VALUES (?, ?)`;
     const params = [username, password];
@@ -46,6 +49,7 @@ class MyDatabase {
     }
   }
 
+  // Remove a user from the table
   async removeUser(username) {
     const removeUserSQL = `DELETE FROM ${this.tableName} WHERE username = ?`;
     const params = [username];
@@ -57,6 +61,7 @@ class MyDatabase {
     }
   }
 
+  // Retrieve a specific user from the table
   async retrieveUser(username) {
     const retrieveUserSQL = `SELECT * FROM ${this.tableName} WHERE username = ?`;
     const params = [username];
@@ -75,6 +80,7 @@ class MyDatabase {
     }
   }
 
+  // Retrieve all users and pass thru a callback
   async retrieveUsers(callback) {
     const retrieveUsersSQL = `SELECT * FROM ${this.tableName}`;
 
@@ -86,6 +92,7 @@ class MyDatabase {
     }
   }
 
+  // Change username for a specific user
   async changeUsername(username, newUsername) {
     const changeUsernameSQL = `UPDATE ${this.tableName} SET username = ? WHERE username = ?`;
     const params = [newUsername, username];
@@ -97,6 +104,7 @@ class MyDatabase {
     }
   }
 
+  // Change password for a specific user
   async changePassword(username, newPassword) {
     const changePasswordSQL = `UPDATE ${this.tableName} SET password = ? WHERE username = ?`;
     const params = [newPassword, username];
@@ -108,6 +116,7 @@ class MyDatabase {
     }
   }
 
+  // Clear the entire database table
   async clearDatabase() {
     const clearDatabaseSQL = `DELETE FROM ${this.tableName}`;
 
@@ -118,6 +127,7 @@ class MyDatabase {
     }
   }
 
+  // Close the database connection
   async closeDatabase() {
     if (this.db) {
       return new Promise((resolve, reject) => {
@@ -135,8 +145,7 @@ class MyDatabase {
     }
   }
 
-  // Queries
-
+  // Execute SQL run query with a statement and params
   async runQuery(sql, params = []) {
     return new Promise((resolve, reject) => {
       this.db.run(sql, params, function (err) {
@@ -149,6 +158,7 @@ class MyDatabase {
     });
   }
 
+  // Execute SQL all query with a statement and params
   async allQuery(sql, params = []) {
     return new Promise((resolve, reject) => {
       this.db.all(sql, params, (err, rows) => {
