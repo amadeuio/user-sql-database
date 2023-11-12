@@ -25,20 +25,20 @@ class MyDatabase {
     });
   }
 
-  insertData(username, password) {
-    const insertDataSQL = `INSERT INTO ${this.tableName} (username, password) VALUES (?, ?)`;
+  addUser(username, password) {
+    const addUserSQL = `INSERT INTO ${this.tableName} (username, password) VALUES (?, ?)`;
     const params = [username, password];
 
     this.db.serialize(() => {
-      this.db.run(insertDataSQL, params);
+      this.db.run(addUserSQL, params);
     });
   }
 
-  retreiveDatabase(callback) {
-    const retreiveDatabaseSQL = `SELECT * FROM ${this.tableName}`;
+  retreiveUsers(callback) {
+    const retreiveUsersSQL = `SELECT * FROM ${this.tableName}`;
 
     this.db.serialize(() => {
-      this.db.all(retreiveDatabaseSQL, callback);
+      this.db.all(retreiveUsersSQL, callback);
     });
   }
 }
@@ -66,7 +66,7 @@ userDatabase.setDatabaseName("userDatabase.db");
 userDatabase.createTable("users");
 
 // Insert a user
-userDatabase.insertData("username", "password");
+userDatabase.addUser("username", "password");
 
 // Print
-userDatabase.retreiveDatabase(print);
+userDatabase.retreiveUsers(print);
