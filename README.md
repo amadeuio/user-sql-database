@@ -46,12 +46,29 @@ npm install
 
 **1. Create a database**
 
+Let's first create a database object, where all the methods will be called
+
 ```typescript
 const userDatabase = new MyDatabase();
+```
+
+**2. Create an IIFE**
+
+Since most of the methods we are going to use are asynchronous, we will call them inside an `async` IIFE (Immediately Invoked Function Expression). This is a handy way to call `async` functions, and it allows us to `await` each asynchronous operation, ensuring that one completes before moving on to the next.
+
+```typescript
+(async () => {
+  // Methods will be called here ...
+})();
+```
+
+**3. Create a database named "userDatabase.db"**
+
+```typescript
 await userDatabase.createDatabase("userDatabase.db");
 ```
 
-**2. Create a table in the database named "users"**
+**4. Create a table in the database named "users"**
 
 ```typescript
 await userDatabase.createTable("users");
