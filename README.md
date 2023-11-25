@@ -76,6 +76,8 @@ await userDatabase.createTable("users");
 
 **5. Add users**
 
+The users are objects with the following 3 properites: automatic `id`, a `username` and a `password`
+
 ```typescript
 await userDatabase.addUser("username1", "password1");
 await userDatabase.addUser("username2", "password2");
