@@ -91,6 +91,8 @@ Using the `retreiveUsers()` metod with a `print` callback
 await userDatabase.retrieveUsers(print);
 ```
 
+We obtain:
+
 ```typescript
 { id: 1, username: 'username1', password: 'password1' }
 { id: 2, username: 'username2', password: 'password2' }
