@@ -46,7 +46,7 @@ npm install
 
 **1. Create a database**
 
-Let's first create a database object, where all the methods will be called
+Let's first create a database object, where the all the methods will be called
 
 ```typescript
 const userDatabase = new MyDatabase();
@@ -72,4 +72,24 @@ await userDatabase.createDatabase("userDatabase.db");
 
 ```typescript
 await userDatabase.createTable("users");
+```
+
+**5. Add users**
+
+```typescript
+await userDatabase.addUser("username1", "password1");
+await userDatabase.addUser("username2", "password2");
+```
+
+**6. Print all users**
+
+Using the `retreiveUsers()` metod with a `print` callback
+
+```typescript
+await userDatabase.retrieveUsers(print);
+```
+
+```typescript
+{ id: 1, username: 'username1', password: 'password1' }
+{ id: 2, username: 'username2', password: 'password2' }
 ```

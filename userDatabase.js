@@ -193,6 +193,9 @@ function print(rows) {
   await userDatabase.addUser("username1", "password1");
   await userDatabase.addUser("username2", "password2");
 
+  // Print all users
+  await userDatabase.retrieveUsers(print);
+
   // Remove user
   //await userDatabase.removeUser("username2");
 
