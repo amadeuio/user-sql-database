@@ -44,7 +44,7 @@ npm install
 
 ### Usage 🖊️
 
-**1. Create a database**
+**1. Create a database object**
 
 Let's first create a database object, where the all the methods will be called
 
