@@ -197,7 +197,10 @@ function print(rows) {
   await userDatabase.retrieveUsers(print);
 
   // Remove user
-  //await userDatabase.removeUser("username2");
+  await userDatabase.removeUser("username2");
+
+  // Print all users
+  await userDatabase.retrieveUsers(print);
 
   // Retreive user
   //console.log(await userDatabase.retrieveUser("username1"));

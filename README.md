@@ -91,9 +91,21 @@ Using the `retreiveUsers()` metod with a `print` callback
 await userDatabase.retrieveUsers(print);
 ```
 
-We obtain:
+We obtain our database
 
 ```typescript
 { id: 1, username: 'username1', password: 'password1' }
 { id: 2, username: 'username2', password: 'password2' }
+```
+
+**7. Remove a user**
+
+```typescript
+await userDatabase.removeUser("username2");
+```
+
+Indeed if we print all users again, the `username2` has been removed from the database
+
+```typescript
+{ id: 1, username: 'username1', password: 'password1' }
 ```
