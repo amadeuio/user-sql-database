@@ -109,3 +109,5 @@ Indeed if we print all users again, the `username2` has been removed from the da
 ```typescript
 { id: 1, username: 'username1', password: 'password1' }
 ```
+
+**8. Retreive a user**
