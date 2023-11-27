@@ -62,7 +62,7 @@ Since most of the methods we are going to use are asynchronous, we will call the
 })();
 ```
 
-**3. Create a database named "userDatabase.db"**
+**3. Create a database named `userDatabase.db`**
 
 ```typescript
 await userDatabase.createDatabase("userDatabase.db");
