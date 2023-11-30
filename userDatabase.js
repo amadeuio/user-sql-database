@@ -192,6 +192,7 @@ function print(rows) {
   // Add users
   await userDatabase.addUser("username1", "password1");
   await userDatabase.addUser("username2", "password2");
+  await userDatabase.addUser("username3", "password3");
 
   // Print all users
   await userDatabase.retrieveUsers(print);
@@ -203,7 +204,7 @@ function print(rows) {
   await userDatabase.retrieveUsers(print);
 
   // Retreive user
-  //console.log(await userDatabase.retrieveUser("username1"));
+  console.log(await userDatabase.retrieveUser("username1"));
 
   // Change username
   await userDatabase.changeUsername("username1", "newUsername");
