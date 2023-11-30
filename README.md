@@ -81,6 +81,7 @@ The users are objects with the following 3 properites: automatic `id`, a `userna
 ```typescript
 await userDatabase.addUser("username1", "password1");
 await userDatabase.addUser("username2", "password2");
+await userDatabase.addUser("username3", "password3");
 ```
 
 **6. Print all users**
@@ -96,6 +97,7 @@ We obtain our database
 ```typescript
 { id: 1, username: 'username1', password: 'password1' }
 { id: 2, username: 'username2', password: 'password2' }
+{ id: 3, username: 'username3', password: 'password3' }
 ```
 
 **7. Remove a user**
@@ -108,6 +110,7 @@ Indeed if we print all users again, the `username2` has been removed from the da
 
 ```typescript
 { id: 1, username: 'username1', password: 'password1' }
+{ id: 3, username: 'username3', password: 'password3' }
 ```
 
 **8. Retreive a user**
