@@ -114,3 +114,13 @@ Indeed if we print all users again, the `username2` has been removed from the da
 ```
 
 **8. Retreive a user**
+
+```typescript
+await userDatabase.retrieveUser("username1"):
+```
+
+Will return
+
+```typescript
+{ id: 1, username: 'username1', password: 'password1' }
+```
