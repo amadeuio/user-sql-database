@@ -124,3 +124,15 @@ Will return
 ```typescript
 { id: 1, username: 'username1', password: 'password1' }
 ```
+
+**9. Change username**
+
+```typescript
+await userDatabase.changeUsername("username1", "newUsername");
+```
+
+The updated user object will look like this
+
+```typescript
+{ id: 1, username: 'newUsername', password: 'password1' }
+```
