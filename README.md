@@ -148,3 +148,16 @@ The updated user object will look like this
 ```typescript
 { id: 3, username: 'username3', password: 'newPassword' }
 ```
+
+**11. Print all users**
+
+```typescript
+await userDatabase.retrieveUsers(print);
+```
+
+We obtain our updated database
+
+```typescript
+{ id: 1, username: 'newUsername', password: 'password1' }
+{ id: 3, username: 'username3', password: 'newPassword' }
+```
