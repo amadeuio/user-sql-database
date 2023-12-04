@@ -1,7 +1,7 @@
 ![languages](https://img.shields.io/badge/languages-ts-blue)
 ![license](https://img.shields.io/badge/license-MIT-green)
 
-# User Database 📋👤
+# User Database 👤
 
 ### Description 📚
 
