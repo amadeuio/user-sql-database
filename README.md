@@ -161,3 +161,9 @@ We obtain our updated database
 { id: 1, username: 'newUsername', password: 'password1' }
 { id: 3, username: 'username3', password: 'newPassword' }
 ```
+
+**12. Close the database**
+
+```typescript
+await userDatabase.closeDatabase();
+```
