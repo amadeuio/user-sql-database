@@ -136,3 +136,15 @@ The updated user object will look like this
 ```typescript
 { id: 1, username: 'newUsername', password: 'password1' }
 ```
+
+**10. Change password**
+
+```typescript
+await userDatabase.changePassword("username3", "newPassword");
+```
+
+The updated user object will look like this
+
+```typescript
+{ id: 3, username: 'username3', password: 'newPassword' }
+```

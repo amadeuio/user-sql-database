@@ -210,7 +210,7 @@ function print(rows) {
   await userDatabase.changeUsername("username1", "newUsername");
 
   // Change password
-  await userDatabase.changePassword("username2", "newPassword");
+  await userDatabase.changePassword("username3", "newPassword");
 
   // Print all users
   await userDatabase.retrieveUsers(print);
