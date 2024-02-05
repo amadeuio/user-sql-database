@@ -27,7 +27,7 @@ This repo features a user database class implemented in JavaScript and SQLite. I
 1. Clone the repository to your local machine:
 
 ```sh
-git clone git@github.com:nightrunner4/sql-storage.git
+git clone git@github.com:amadeuio/sql-storage.git
 ```
 
 2. Navigate to the project directory:

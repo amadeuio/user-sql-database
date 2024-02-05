@@ -5,14 +5,14 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nightrunner4/sql-storage.git"
+    "url": "git+https://github.com/amadeuio/sql-storage.git"
   },
   "author": "Amadeu Serras",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nightrunner4/sql-storage/issues"
+    "url": "https://github.com/amadeuio/sql-storage/issues"
   },
-  "homepage": "https://github.com/nightrunner4/sql-storage#readme",
+  "homepage": "https://github.com/amadeuio/sql-storage#readme",
   "dependencies": {
     "sqlite3": "^5.1.6"
   }
